@@ -92,7 +92,7 @@ class SitemapHelper extends AppHelper {
 			'encode' => true
 			), $options);
 		if (!empty($options['loc'])) {
-			if (!empty($item['lastmod'])) {
+			if (empty($option['lastmod'])) {
 				App::import('Core', 'Helper'); 
 				App::import('Helper', 'Time');
 				$time  = new TimeHelper();
@@ -105,7 +105,7 @@ class SitemapHelper extends AppHelper {
 				//Construct a sitemapindex item
 				$item = array();
 				$item['openEntity'] = "<sitemap>";
-				$item['loc'] = $this->entityMaker("loc", $options['loc']);
+				$item['loc'] = $this->_entityMaker("loc", $options['loc']);
 				$item['lastmod'] = $this->_entityMaker("lastmod", $options['lastmod']);
 				$item['closeEntity'] = "</sitemap>";
 				return $this->_mergeArrayEntities($item);
@@ -113,10 +113,10 @@ class SitemapHelper extends AppHelper {
 				//Construct a sitemap item
 				$item = array();
 				$item['openEntity'] = "<url>";
-				$item['loc'] = $this->entityMaker("loc", $options['loc']);
-				$item['lastmod'] = $this->entityMaker("lastmod", $options['lastmod']);
-				$item['changefreq'] = $this->entityMaker("changefreq", $options['lastmod']);
-				$item['priority'] = $this->entityMaker("priority", $options['lastmod']);
+				$item['loc'] = $this->_entityMaker("loc", $options['loc']);
+				$item['lastmod'] = $this->_entityMaker("lastmod", $options['lastmod']);
+				$item['changefreq'] = $this->_entityMaker("changefreq", $options['changefreq']);
+				$item['priority'] = $this->_entityMaker("priority", $options['priority']);
 				$item['closeEntity'] = "</url>";
 				return $this->_mergeArrayEntities($item);
 			}
